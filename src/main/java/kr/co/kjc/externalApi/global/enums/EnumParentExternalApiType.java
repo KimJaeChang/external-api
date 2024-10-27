@@ -5,9 +5,9 @@ import lombok.RequiredArgsConstructor;
 
 @Getter
 @RequiredArgsConstructor
-public enum EnumMongoDataBase {
+public enum EnumParentExternalApiType {
 
-  COMMON_LOG("common-log", "공통 로그 DataBase"),
+  KECO("keco", "환경공단 API"),
   ;
 
   private final String code;

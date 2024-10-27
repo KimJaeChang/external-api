@@ -6,6 +6,13 @@ spring:
 
 # Service Properties
 service:
+  external:
+    open-api:
+      keco:
+        ev:
+          station:
+            host: http://apis.data.go.kr/B552584/EvCharger
+            key: ${KJC_OPEN_API_SECRET_KEY_KECO_EV_STATIONS}
   mongodb:
     host: localhost
     port: 27017

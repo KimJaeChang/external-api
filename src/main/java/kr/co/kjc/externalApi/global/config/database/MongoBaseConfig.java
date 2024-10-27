@@ -8,7 +8,7 @@ import org.springframework.data.mongodb.repository.config.EnableMongoRepositorie
 
 @Configuration
 @EnableAutoConfiguration(exclude = {MongoAutoConfiguration.class, MongoDataAutoConfiguration.class})
-@EnableMongoRepositories(basePackages = "kr.co.kjc.settlement.repository.mongo")
+@EnableMongoRepositories(basePackages = "kr.co.kjc.externalApi.repository.mongo")
 public class MongoBaseConfig {
 
 }

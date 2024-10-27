@@ -1,10 +1,12 @@
 package kr.co.kjc.externalApi.global.config.common;
 
 import java.util.List;
+import kr.co.kjc.externalApi.global.converter.EnumExternalParentTypeConverter;
 import kr.co.kjc.externalApi.global.interceptor.GlobalLoggingInterceptor;
 import kr.co.kjc.externalApi.global.resolver.BaseSearchDTOArgumentResolver;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.format.FormatterRegistry;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
@@ -19,7 +21,6 @@ public class CommonWebConfig implements WebMvcConfigurer {
   private final static List<String> LOG_EXCLUDES = List.of("/css/**", "/*.ico", "/error",
       "/error-page/**");
 
-  private final BaseSearchDTOArgumentResolver baseSearchDTOArgumentResolver;
 
   @Override
   public void addResourceHandlers(ResourceHandlerRegistry registry) { // 기본 resourceHandler 유지하면서 추가
@@ -38,7 +39,12 @@ public class CommonWebConfig implements WebMvcConfigurer {
 
   @Override
   public void addArgumentResolvers(List<HandlerMethodArgumentResolver> resolvers) {
-    resolvers.add(baseSearchDTOArgumentResolver);
+    resolvers.add(new BaseSearchDTOArgumentResolver());
+  }
+
+  @Override
+  public void addFormatters(FormatterRegistry registry) {
+    registry.addConverter(new EnumExternalParentTypeConverter());
   }
 
   // NOTE : CORS Filter

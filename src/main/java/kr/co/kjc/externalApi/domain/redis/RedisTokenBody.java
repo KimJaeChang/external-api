@@ -21,7 +21,7 @@ import org.springframework.data.redis.core.TimeToLive;
 @AllArgsConstructor
 @NoArgsConstructor
 @RedisHash(value = "TokenBody")
-public class TokenBody implements Serializable {
+public class RedisTokenBody implements Serializable {
 
   private String uuid;
   private LocalDateTime createdAt;
@@ -29,8 +29,8 @@ public class TokenBody implements Serializable {
   @TimeToLive(unit = TimeUnit.MILLISECONDS)
   private Long expiredTime;
 
-  public static TokenBody of(String uuid, long expiredTime) {
-    TokenBody result = new TokenBody();
+  public static RedisTokenBody of(String uuid, long expiredTime) {
+    RedisTokenBody result = new RedisTokenBody();
     result.uuid = uuid;
     result.createdAt = LocalDateTime.now(ZoneId.of("Asia/Seoul"));
     result.expiredAt = LocalDateTime.now(ZoneId.of("Asia/Seoul"))

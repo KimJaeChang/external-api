@@ -13,23 +13,23 @@ import org.springframework.data.redis.core.RedisHash;
 @Getter
 @NoArgsConstructor
 @RedisHash(value = "Token", timeToLive = 60L * 60L)
-public class Token {
+public class RedisToken {
 
   @Id
   private String refreshToken;
 
   @Embedded
-  private TokenBody tokenBody;
+  private RedisTokenBody redisTokenBody;
 
-  public static Token of(String refreshToken, TokenBody tokenBody) {
-    Token result = new Token();
+  public static RedisToken of(String refreshToken, RedisTokenBody redisTokenBody) {
+    RedisToken result = new RedisToken();
     result.refreshToken = refreshToken;
-    result.tokenBody = tokenBody;
+    result.redisTokenBody = redisTokenBody;
     return result;
   }
 
-  public static Token createTokenByRefreshToken(String refreshToken) {
-    Token result = new Token();
+  public static RedisToken createTokenByRefreshToken(String refreshToken) {
+    RedisToken result = new RedisToken();
     result.refreshToken = refreshToken;
     return result;
   }

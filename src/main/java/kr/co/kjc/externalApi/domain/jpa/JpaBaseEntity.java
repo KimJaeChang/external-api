@@ -15,7 +15,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 @Getter
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
-public abstract class BaseEntity implements Serializable {
+public abstract class JpaBaseEntity implements Serializable {
 
   @CreatedDate
   @Column(name = "CREATED_AT", updatable = false)

@@ -11,7 +11,7 @@ public enum EnumMongoCollection {
   ;
 
   private final String code;
-  private final String name;
+  private final String description;
   private final EnumMongoDataBase mongoDataBase;
 
 }

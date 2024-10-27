@@ -10,7 +10,7 @@ import lombok.Getter;
 @Entity
 @Getter
 @Table(name = "COMPANY")
-public class Company extends BaseEntity {
+public class JpaCompany extends JpaBaseEntity {
 
   @Id
   @GeneratedValue
@@ -23,8 +23,8 @@ public class Company extends BaseEntity {
   @Column(name = "company_uuid")
   private String companyUuid;
 
-  public static Company of(String companyName, String companyUuid) {
-    Company company = new Company();
+  public static JpaCompany of(String companyName, String companyUuid) {
+    JpaCompany company = new JpaCompany();
     company.companyName = companyName;
     company.companyUuid = companyUuid;
     return company;

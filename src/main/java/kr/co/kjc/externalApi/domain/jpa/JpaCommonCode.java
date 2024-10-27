@@ -12,7 +12,7 @@ import lombok.ToString;
 @Getter
 @Table(name = "COMMON_CODE")
 @ToString
-public class CommonCode extends BaseEntity {
+public class JpaCommonCode extends JpaBaseEntity {
 
   @Id
   @GeneratedValue
@@ -31,21 +31,21 @@ public class CommonCode extends BaseEntity {
   @Column(name = "description")
   private String description;
 
-  public static CommonCode of(String parentCode, String childCode) {
-    CommonCode result = new CommonCode();
+  public static JpaCommonCode of(String parentCode, String childCode) {
+    JpaCommonCode result = new JpaCommonCode();
     result.parentCode = parentCode;
     result.childCode = childCode;
     return result;
   }
 
-  public static CommonCode createExampleByParentCode(String parentCode) {
-    CommonCode result = new CommonCode();
+  public static JpaCommonCode createExampleByParentCode(String parentCode) {
+    JpaCommonCode result = new JpaCommonCode();
     result.parentCode = parentCode;
     return result;
   }
 
-  public static CommonCode createExampleByChildCode(String childCode) {
-    CommonCode result = new CommonCode();
+  public static JpaCommonCode createExampleByChildCode(String childCode) {
+    JpaCommonCode result = new JpaCommonCode();
     result.childCode = childCode;
     return result;
   }

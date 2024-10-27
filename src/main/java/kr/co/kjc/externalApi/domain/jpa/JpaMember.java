@@ -14,7 +14,7 @@ import lombok.Getter;
 @Entity
 @Getter
 @Table(name = "MEMBER")
-public class Member extends BaseEntity {
+public class JpaMember extends JpaBaseEntity {
 
   @Id
   @GeneratedValue
@@ -25,7 +25,7 @@ public class Member extends BaseEntity {
 
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "company_id")
-  private Company company;
+  private JpaCompany company;
 
   @Column(name = "member_userid")
   private String userId;
@@ -39,8 +39,8 @@ public class Member extends BaseEntity {
   @Column(name = "member_handphone")
   private String handPhone;
 
-  public static Member of(String userId, String userName, String handPhone, Company company) {
-    Member result = new Member();
+  public static JpaMember of(String userId, String userName, String handPhone, JpaCompany company) {
+    JpaMember result = new JpaMember();
     result.company = company;
     result.userId = userId;
     result.uuid = UUID.randomUUID().toString();
@@ -49,8 +49,8 @@ public class Member extends BaseEntity {
     return result;
   }
 
-  public static Member createExampleByUuid(String uuid) {
-    Member result = new Member();
+  public static JpaMember createExampleByUuid(String uuid) {
+    JpaMember result = new JpaMember();
     result.uuid = uuid;
     return result;
   }
