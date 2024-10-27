@@ -34,7 +34,7 @@ public class SwaggerApiConfig {
         .url("/");
 
     Server server2 = new Server()
-        .url("https://settlement-api.co.kr");
+        .url("https://external-api.co.kr");
 
     List<Server> servers = List.of(server1, server2);
 
