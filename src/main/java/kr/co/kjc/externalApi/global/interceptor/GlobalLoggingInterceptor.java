@@ -1,4 +1,4 @@
-package kr.co.kjc.externalApi.global.config.interceptor;
+package kr.co.kjc.externalApi.global.interceptor;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 

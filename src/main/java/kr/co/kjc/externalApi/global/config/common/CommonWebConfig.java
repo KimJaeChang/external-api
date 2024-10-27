@@ -1,8 +1,8 @@
 package kr.co.kjc.externalApi.global.config.common;
 
 import java.util.List;
-import kr.co.kjc.externalApi.global.config.interceptor.GlobalLoggingInterceptor;
-import kr.co.kjc.externalApi.global.config.resolver.BaseSearchDTOArgumentResolver;
+import kr.co.kjc.externalApi.global.interceptor.GlobalLoggingInterceptor;
+import kr.co.kjc.externalApi.global.resolver.BaseSearchDTOArgumentResolver;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;

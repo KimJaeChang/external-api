@@ -1,4 +1,4 @@
-package kr.co.kjc.externalApi.global.config.resolver;
+package kr.co.kjc.externalApi.global.resolver;
 
 import jakarta.servlet.http.HttpServletRequest;
 import java.util.Optional;
