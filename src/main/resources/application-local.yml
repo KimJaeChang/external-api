@@ -1,0 +1,16 @@
+spring:
+  data:
+    redis:
+      host: localhost
+      port: 6379
+
+# Service Properties
+service:
+  mongodb:
+    host: localhost
+    port: 27017
+    username:
+    password:
+    authentication-database:
+    database:
+      common-log: common-log

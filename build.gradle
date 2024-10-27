@@ -47,6 +47,8 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-aop'
     implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310'
 
+    implementation 'com.github.gavlyukovskiy:p6spy-spring-boot-starter:'.concat(p6spy_version)
+
     // Open API Swagger : https://mvnrepository.com/artifact/org.springdoc/springdoc-openapi-ui
     implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:'.concat(openapi_starter_version)
 
