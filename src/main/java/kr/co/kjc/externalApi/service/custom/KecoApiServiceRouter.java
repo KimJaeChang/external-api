@@ -8,7 +8,7 @@ import kr.co.kjc.externalApi.global.enums.EnumParentExternalApiType;
 import kr.co.kjc.externalApi.global.enums.EnumResponseCode;
 import kr.co.kjc.externalApi.global.exception.BaseAPIException;
 import kr.co.kjc.externalApi.service.ExternalApiService;
-import kr.co.kjc.externalApi.service.impl.KecoEvApiService;
+import kr.co.kjc.externalApi.service.impl.keco.KecoEvApiService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 

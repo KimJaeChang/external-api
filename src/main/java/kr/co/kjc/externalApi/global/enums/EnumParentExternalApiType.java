@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 public enum EnumParentExternalApiType {
 
   KECO("keco", "환경공단 API"),
+  GITHUB("github", "GITHUB API")
   ;
 
   private final String code;

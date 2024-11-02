@@ -1,61 +1,50 @@
 package kr.co.kjc.externalApi.global.gateway.custom;
 
+import static kr.co.kjc.externalApi.global.enums.EnumChildExternalApiType.EV_CHARGERS_INFO;
+import static kr.co.kjc.externalApi.global.enums.EnumChildExternalApiType.EV_CHARGERS_STATUS;
+import static kr.co.kjc.externalApi.global.enums.EnumParentExternalApiType.KECO;
+
 import jakarta.annotation.PostConstruct;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import kr.co.kjc.externalApi.global.enums.EnumChildExternalApiType;
-import kr.co.kjc.externalApi.global.enums.EnumClientType;
 import kr.co.kjc.externalApi.global.enums.EnumParentExternalApiType;
 import kr.co.kjc.externalApi.global.enums.EnumResponseCode;
 import kr.co.kjc.externalApi.global.exception.BaseAPIException;
 import kr.co.kjc.externalApi.global.gateway.ApiGateway;
+import kr.co.kjc.externalApi.global.gateway.keco.KecoApiGatewayRouter;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
 public class ApiGatewayRouter {
 
-  @Value("${service.external.open-api.keco.ev.chargers.client-type}")
-  private String defaultEvClientType;
-
-  private static Map<EnumParentExternalApiType, Map<EnumChildExternalApiType, ApiGateway<?>>> parentApiMap = new HashMap<>();
-  private static Map<EnumChildExternalApiType, ApiGateway<?>> childApiMap = new HashMap<>();
-  private static Map<EnumClientType, DefaultKecoApiGateway<?>> clientTypeMap = new HashMap<>();
+  private static Map<EnumParentExternalApiType, List<Map<EnumChildExternalApiType, ApiGateway<?>>>> map = new HashMap<>();
 
   private final KecoApiGatewayRouter kecoApiGatewayRouter;
 
   @PostConstruct
   public void init() {
-    initKecoEvApiService();
+    map.put(KECO, List.of(kecoApiMap()));
   }
 
-  private void initKecoEvApiService() {
-    childInit();
-    parentInit();
+  Map<EnumChildExternalApiType, ApiGateway<?>> kecoApiMap() {
+    ApiGateway<?> evChargerInfoApi = kecoApiGatewayRouter.get(EV_CHARGERS_INFO);
+    ApiGateway<?> evChargerStatusApi = kecoApiGatewayRouter.get(EV_CHARGERS_STATUS);
+
+    return Map.of(EV_CHARGERS_INFO, evChargerInfoApi, EV_CHARGERS_STATUS, evChargerStatusApi);
   }
 
-  private void parentInit() {
-    parentApiMap.put(EnumParentExternalApiType.KECO, childApiMap);
-  }
-
-  private void childInit() {
-    childApiMap.put(EnumChildExternalApiType.EV_CHARGERS_INFO, evClientTypeInit());
-    childApiMap.put(EnumChildExternalApiType.EV_CHARGERS_STATUS, evClientTypeInit());
-  }
-
-  private DefaultKecoApiGateway<?> evClientTypeInit() {
-    EnumClientType evClientType = EnumClientType.fromCode(defaultEvClientType);
-    return kecoApiGatewayRouter.get(evClientType);
-  }
-
-  public ApiGateway<?> get(EnumParentExternalApiType enumParentExternalApiType, EnumChildExternalApiType enumChildExternalApiType) {
-    return parentApiMap.computeIfAbsent(enumParentExternalApiType, (parentExternalApiType) -> {
-      throw new BaseAPIException(EnumResponseCode.INVALID_EXTERNAL_PARENT_API);
-    }).computeIfAbsent(enumChildExternalApiType, (childExternalApiType) -> {
-      throw new BaseAPIException(EnumResponseCode.INVALID_EXTERNAL_CHILD_API);
-    });
+  public ApiGateway<?> get(EnumParentExternalApiType enumParentExternalApiType,
+      EnumChildExternalApiType enumChildExternalApiType) {
+    return map.computeIfAbsent(enumParentExternalApiType, (parentExternalApiType) -> {
+          throw new BaseAPIException(EnumResponseCode.INVALID_EXTERNAL_PARENT_API);
+        }).stream()
+        .map(m -> m.get(enumChildExternalApiType))
+        .findFirst()
+        .orElseThrow(() -> new BaseAPIException(EnumResponseCode.INVALID_EXTERNAL_CHILD_API));
   }
 
 }

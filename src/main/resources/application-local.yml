@@ -4,6 +4,10 @@ spring:
       host: localhost
       port: 6379
 
+config:
+  github:
+    token:
+
 # Service Properties
 service:
   external:
@@ -11,10 +15,9 @@ service:
       keco:
         ev:
           chargers:
-            client-type: web-client
+            api-client: web-client
             host: http://apis.data.go.kr
             uri: /B552584/EvCharger
-            key: ${OPEN_API_SECRET_KEY_KECO_EV_STATIONS}
   mongodb:
     host: localhost
     port: 27017

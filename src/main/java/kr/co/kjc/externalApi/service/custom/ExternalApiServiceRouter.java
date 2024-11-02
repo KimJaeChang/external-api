@@ -1,9 +1,10 @@
-package kr.co.kjc.externalApi.global.config.client.generator;
+package kr.co.kjc.externalApi.service.custom;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
-public abstract class RestClientGenerator {
+public class ExternalApiServiceRouter {
+
 }

@@ -17,22 +17,10 @@ public interface ApiGateway<T> {
 
   default <T> T getApi(EnumClientType enumClientType, EnumClientRequestType enumClientRequestType,
       Class<T> req, Class<T> resBody) {
-    return switchGetApi(enumClientType, enumClientRequestType, req, resBody);
+    throw new BaseAPIException(EnumResponseCode.SERVICE_UNAVAILABLE_BY_IMPLEMENT);
   }
 
   default <T> T postApi(EnumClientType enumClientType, Class<T> reqBody, Class<T> resBody) {
-    throw new BaseAPIException(EnumResponseCode.SERVICE_UNAVAILABLE_BY_IMPLEMENT);
-  }
-
-  default <T> T switchGetApi(EnumClientType enumClientType, EnumClientRequestType requestType, Class<T> req, Class<T> resBody) {
-    throw new BaseAPIException(EnumResponseCode.SERVICE_UNAVAILABLE_BY_IMPLEMENT);
-  }
-
-  default <T> T switchWebClientGetApi(EnumClientRequestType enumClientRequestType, Class<T> req, Class<T> resBody) {
-    throw new BaseAPIException(EnumResponseCode.SERVICE_UNAVAILABLE_BY_IMPLEMENT);
-  }
-
-  default <T> T switchRestClientGetApi(EnumClientRequestType enumClientRequestType, Class<T> req, Class<T> resBody) {
     throw new BaseAPIException(EnumResponseCode.SERVICE_UNAVAILABLE_BY_IMPLEMENT);
   }
 }

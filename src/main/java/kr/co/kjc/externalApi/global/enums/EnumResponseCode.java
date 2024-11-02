@@ -26,6 +26,7 @@ public enum EnumResponseCode {
   INVALID_EXTERNAL_CHILD_API(HttpStatus.BAD_REQUEST, "올바르지 않은 External Child Api Type 입니다."),
   INVALID_CLIENT_GENERATOR(HttpStatus.BAD_REQUEST, "올바르지 않은 ClientGenerator 입니다."),
   INVALID_CLIENT_TYPE(HttpStatus.BAD_REQUEST, "올바르지 않은 EnumClientType 입니다."),
+  INVALID_CHILD_EXTERNAL_API_TYPE(HttpStatus.BAD_REQUEST, "올바르지 않은 EnumChildExternalApiType 입니다."),
 
   /**
    * 401 - UNAUTHORIZED

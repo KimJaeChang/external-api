@@ -15,12 +15,11 @@ java {
 
 ext {
     openapi_starter_version = "2.6.0"
-    jasypt_version = "3.0.5"
-    p6spy_version = "1.9.1"
+    github_version = "2.0.0-alpha-2"
+    p6spy_version = "1.9.2"
     apache_poi_xlsx_version = "5.2.5"
     aws_cloud_version = "3.1.1"
     jwt_verson = "0.12.5"
-    open_ai_verson = "1.0.0-SNAPSHOT"
     vertex_ai_gemini_verson = "1.0.0-SNAPSHOT"
 }
 
@@ -46,8 +45,10 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-webflux'
     implementation 'org.springframework.boot:spring-boot-starter-validation'
     implementation 'org.springframework.boot:spring-boot-starter-aop'
+    implementation 'org.springframework.boot:spring-boot-devtools'
     implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310'
 
+    implementation 'org.kohsuke:github-api:'.concat(github_version)
     implementation 'com.github.gavlyukovskiy:p6spy-spring-boot-starter:'.concat(p6spy_version)
 
     // Open API Swagger : https://mvnrepository.com/artifact/org.springdoc/springdoc-openapi-ui
