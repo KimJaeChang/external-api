@@ -1,4 +1,4 @@
-package kr.co.kjc.externalApi.global.gateway.impl;
+package kr.co.kjc.externalApi.global.gateway.impl.ev;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -6,27 +6,22 @@ import java.net.URI;
 import kr.co.kjc.externalApi.global.dtos.api.open.OpenApiDto;
 import kr.co.kjc.externalApi.global.enums.EnumClientRequestType;
 import kr.co.kjc.externalApi.global.enums.EnumClientType;
-import kr.co.kjc.externalApi.global.exception.BaseAPIException;
-import kr.co.kjc.externalApi.global.exception.BaseAPIExceptionDto;
-import kr.co.kjc.externalApi.global.gateway.custom.DefaultKecoApiGateway;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpStatus;
+import kr.co.kjc.externalApi.global.gateway.impl.KecoWebClientApiGateway;
 import org.springframework.stereotype.Component;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.util.UriComponentsBuilder;
 
 @Component
-public class KecoApiGateway<T extends OpenApiDto> extends DefaultKecoApiGateway<T> {
+public class KecoEvRestClientApiGateway<T extends OpenApiDto.KecoEvChargersInfo> extends
+    KecoWebClientApiGateway<T> {
 
   private final String host;
   private final String uri;
   private final ObjectMapper om;
 
-  public KecoApiGateway(@Value("${service.external.open-api.keco.ev.chargers.host}") String host,
-      @Value("${service.external.open-api.keco.ev.chargers.uri}") String uri,
-      ObjectMapper om) {
-    this.host = host;
-    this.uri = uri;
+  public KecoEvRestClientApiGateway(ObjectMapper om) {
+    this.host = super.getHost();
+    this.uri = super.getUri();
     this.om = om;
   }
 
@@ -54,22 +49,11 @@ public class KecoApiGateway<T extends OpenApiDto> extends DefaultKecoApiGateway<
   @Override
   public <T> T switchGetApi(EnumClientType enumClientType, EnumClientRequestType requestType,
       Class<T> req, Class<T> resBody) {
-    switch (enumClientType) {
-      case WEB_CLIENT -> {
-        return this.switchWebClientGetApi(requestType, req, resBody);
-      }
-      case REST_CLIENT -> {
-        return this.switchRestClientGetApi(requestType, req, resBody);
-      }
-      default -> {
-        throw new BaseAPIException(
-            BaseAPIExceptionDto.of(HttpStatus.BAD_REQUEST, "clientType을 지정해주세요."));
-      }
-    }
+    return this.switchRestClientGetApi(requestType, req, resBody);
   }
 
   @Override
-  public <T> T switchWebClientGetApi(EnumClientRequestType enumClientRequestType, Class<T> req,
+  public <T> T switchRestClientGetApi(EnumClientRequestType enumClientRequestType, Class<T> req,
       Class<T> resBody) {
 
     UriComponentsBuilder ucb = UriComponentsBuilder.fromUriString(uri);

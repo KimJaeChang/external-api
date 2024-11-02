@@ -11,6 +11,7 @@ service:
       keco:
         ev:
           chargers:
+            client-type: web-client
             host: http://apis.data.go.kr
             uri: /B552584/EvCharger
             key: ${OPEN_API_SECRET_KEY_KECO_EV_STATIONS}
