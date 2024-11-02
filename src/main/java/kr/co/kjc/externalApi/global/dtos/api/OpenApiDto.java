@@ -16,14 +16,14 @@ import lombok.ToString;
 @ToString
 public class OpenApiDto {
 
-  public interface KecoApiDto {
+  public interface KecoApiInterface {
 
   }
 
   @Schema(description = "환경공단 전기자동차 API Dto",
       name = "OpenApiDto.KecoApiDto"
   )
-  public static class DefaultKecoApiEvDto implements KecoApiDto {
+  public static class DefaultKecoApiEvDto implements KecoApiInterface {
 
   }
 

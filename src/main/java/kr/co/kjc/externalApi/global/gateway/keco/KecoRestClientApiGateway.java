@@ -4,7 +4,7 @@ import kr.co.kjc.externalApi.global.dtos.api.OpenApiDto;
 import kr.co.kjc.externalApi.global.enums.EnumClientRequestType;
 import kr.co.kjc.externalApi.global.enums.EnumClientType;
 
-public abstract class KecoRestClientApiGateway<T extends OpenApiDto.KecoApiDto> extends DefaultKecoApiGateway<T> {
+public abstract class KecoRestClientApiGateway<T extends OpenApiDto.KecoApiInterface> extends DefaultKecoApiGateway<T> {
 
   public KecoRestClientApiGateway() {
     super(EnumClientType.REST_CLIENT);
