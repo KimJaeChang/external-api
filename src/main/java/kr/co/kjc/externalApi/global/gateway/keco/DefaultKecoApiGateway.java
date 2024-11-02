@@ -1,11 +1,12 @@
 package kr.co.kjc.externalApi.global.gateway.keco;
 
+import kr.co.kjc.externalApi.global.dtos.api.OpenApiDto;
 import kr.co.kjc.externalApi.global.enums.EnumClientRequestType;
 import kr.co.kjc.externalApi.global.enums.EnumClientType;
 import kr.co.kjc.externalApi.global.enums.EnumParentExternalApiType;
 import kr.co.kjc.externalApi.global.gateway.ApiGateway;
 
-public abstract class DefaultKecoApiGateway<T> implements ApiGateway<T> {
+public abstract class DefaultKecoApiGateway<T extends OpenApiDto.KecoApiDto> implements ApiGateway<T> {
 
   private final EnumParentExternalApiType parentExternalApiType;
   private final EnumClientType clientType;

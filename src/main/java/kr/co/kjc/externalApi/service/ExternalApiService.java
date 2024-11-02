@@ -1,7 +1,7 @@
 package kr.co.kjc.externalApi.service;
 
 import java.util.Optional;
-import kr.co.kjc.externalApi.global.dtos.api.open.OpenApiDto;
+import kr.co.kjc.externalApi.global.dtos.api.OpenApiDto;
 import kr.co.kjc.externalApi.global.enums.EnumChildExternalApiType;
 import org.springframework.data.domain.Page;
 

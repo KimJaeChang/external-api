@@ -3,7 +3,7 @@ package kr.co.kjc.externalApi.global.gateway.keco.ev;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.net.URI;
-import kr.co.kjc.externalApi.global.dtos.api.open.OpenApiDto;
+import kr.co.kjc.externalApi.global.dtos.api.OpenApiDto;
 import kr.co.kjc.externalApi.global.enums.EnumClientRequestType;
 import kr.co.kjc.externalApi.global.enums.EnumClientType;
 import kr.co.kjc.externalApi.global.gateway.keco.KecoRestClientApiGateway;

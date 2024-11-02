@@ -3,7 +3,7 @@ package kr.co.kjc.externalApi.global.gateway.keco.ev;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.net.URI;
-import kr.co.kjc.externalApi.global.dtos.api.open.OpenApiDto;
+import kr.co.kjc.externalApi.global.dtos.api.OpenApiDto;
 import kr.co.kjc.externalApi.global.enums.EnumClientRequestType;
 import kr.co.kjc.externalApi.global.enums.EnumClientType;
 import kr.co.kjc.externalApi.global.gateway.keco.KecoWebClientApiGateway;
@@ -15,7 +15,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 @Component
 @RequiredArgsConstructor
-public class KecoEvWebClientApiGateway<T extends OpenApiDto.KecoEvChargersInfo> extends
+public class KecoEvWebClientApiGateway<T extends OpenApiDto.DefaultKecoApiEvDto> extends
     KecoWebClientApiGateway<T> {
 
   @Value("${service.external.open-api.keco.ev.chargers.host}")

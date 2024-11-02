@@ -1,11 +1,7 @@
-package kr.co.kjc.externalApi.global.dtos.api.open;
+package kr.co.kjc.externalApi.global.dtos.api;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonFormat.Shape;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -20,12 +16,23 @@ import lombok.ToString;
 @ToString
 public class OpenApiDto {
 
+  public interface KecoApiDto {
+
+  }
+
+  @Schema(description = "환경공단 전기자동차 API Dto",
+      name = "OpenApiDto.KecoApiDto"
+  )
+  public static class DefaultKecoApiEvDto implements KecoApiDto {
+
+  }
+
   @Schema(description = "환경공단 전기자동차 충전소 정보 Dto",
       name = "OpenApiDto.KecoEvChargersInfo"
   )
   @NoArgsConstructor(access = AccessLevel.PRIVATE)
   @ToString
-  public static class KecoEvChargersInfo {
+  public static class KecoEvChargersInfo extends DefaultKecoApiEvDto {
 
     @Schema(description = "요청 Dto",
         name = "OpenApiDto.KecoEvChargersInfo.RequestDto"

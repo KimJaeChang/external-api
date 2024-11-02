@@ -9,7 +9,6 @@ import java.util.Map;
 import kr.co.kjc.externalApi.global.enums.EnumChildExternalApiType;
 import kr.co.kjc.externalApi.global.enums.EnumResponseCode;
 import kr.co.kjc.externalApi.global.exception.BaseAPIException;
-import kr.co.kjc.externalApi.global.gateway.ApiGateway;
 import kr.co.kjc.externalApi.global.gateway.keco.ev.KecoEvApiGatewayRouter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -18,7 +17,7 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class KecoApiGatewayRouter {
 
-  private static Map<EnumChildExternalApiType, ApiGateway<?>> map = new HashMap<>();
+  private static Map<EnumChildExternalApiType, DefaultKecoApiGateway<?>> map = new HashMap<>();
 
   private final KecoEvApiGatewayRouter kecoEvApiGatewayRouter;
 
@@ -32,7 +31,7 @@ public class KecoApiGatewayRouter {
     map.put(EV_CHARGERS_STATUS, kecoEvApiGatewayRouter.get(EV_CHARGERS_STATUS));
   }
 
-  public ApiGateway<?> get(EnumChildExternalApiType enumChildExternalApiType) {
+  public DefaultKecoApiGateway<?> get(EnumChildExternalApiType enumChildExternalApiType) {
     return map.computeIfAbsent(enumChildExternalApiType, (childExternalApiType) -> {
       throw new BaseAPIException(EnumResponseCode.INVALID_CHILD_EXTERNAL_API_TYPE);
     });
