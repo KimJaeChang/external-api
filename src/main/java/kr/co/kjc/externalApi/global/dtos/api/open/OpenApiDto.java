@@ -1,7 +1,11 @@
 package kr.co.kjc.externalApi.global.dtos.api.open;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonFormat.Shape;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -26,8 +30,8 @@ public class OpenApiDto {
     @Schema(description = "요청 Dto",
         name = "OpenApiDto.KecoEvChargersInfo.RequestDto"
     )
-    @Builder
     @Data
+    @Builder
     @NoArgsConstructor(access = AccessLevel.PRIVATE)
     @AllArgsConstructor(access = AccessLevel.PRIVATE)
     public static class RequestDto {
@@ -46,7 +50,6 @@ public class OpenApiDto {
 
       @Schema(description = "시도 코드 (행정구역코드 앞 2자리)", example = "11")
       private String zcode;
-
     }
 
     @Schema(description = "응답 Dto",

@@ -22,12 +22,16 @@ public class KecoApiServiceRouter {
 
   @PostConstruct
   public void init() {
-    childServiceMap.put(EnumChildExternalApiType.EV_STATIONS_INFO, kecoEvApiService);
+    initKecoEvApiService();
+  }
+
+  private void initKecoEvApiService() {
+    childServiceMap.put(EnumChildExternalApiType.EV_CHARGERS_INFO, kecoEvApiService);
     parentServiceMap.put(EnumParentExternalApiType.KECO, childServiceMap);
   }
 
-  public ExternalApiService get(EnumChildExternalApiType enumChildExternalApiType) {
-    return parentServiceMap.computeIfAbsent(enumChildExternalApiType.getParentExternalApiType(), (parentExternalApiType) -> {
+  public ExternalApiService get(EnumParentExternalApiType enumParentExternalApiType, EnumChildExternalApiType enumChildExternalApiType) {
+    return parentServiceMap.computeIfAbsent(enumParentExternalApiType, (parentExternalApiType) -> {
       throw new BaseAPIException(EnumResponseCode.INVALID_EXTERNAL_PARENT_API);
     }).computeIfAbsent(enumChildExternalApiType, (childExternalApiType) -> {
       throw new BaseAPIException(EnumResponseCode.INVALID_EXTERNAL_CHILD_API);

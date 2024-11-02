@@ -7,8 +7,8 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public enum EnumChildExternalApiType {
 
-  EV_STATIONS_INFO("ev-stations-info", "전기차 충전소 데이터 정보 API", EnumParentExternalApiType.KECO),
-  EV_STATIONS_STATUS("ev-stations-status", "전기차 충전소 상태 정보 API", EnumParentExternalApiType.KECO),
+  EV_CHARGERS_INFO("ev-chargers-info", "전기차 충전기 데이터 정보 API", EnumParentExternalApiType.KECO),
+  EV_CHARGERS_STATUS("ev-chargers-status", "전기차 충전기 상태 정보 API", EnumParentExternalApiType.KECO),
   ;
 
   private final String code;

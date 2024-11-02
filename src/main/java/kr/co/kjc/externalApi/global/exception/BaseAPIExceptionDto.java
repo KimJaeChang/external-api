@@ -11,7 +11,7 @@ import org.springframework.http.HttpStatus;
 @Data
 public class BaseAPIExceptionDto {
 
-  private HttpStatus code;
+  private HttpStatus status;
 
   private String detail;
 
@@ -19,15 +19,15 @@ public class BaseAPIExceptionDto {
   private LocalDateTime timestamp;
 
   @Builder
-  public BaseAPIExceptionDto(HttpStatus code, String detail) {
-    this.code = code;
+  public BaseAPIExceptionDto(HttpStatus status, String detail) {
+    this.status = status;
     this.detail = detail;
     this.timestamp = LocalDateTime.now(ZoneId.of("Asia/Seoul"));
   }
 
-  public static BaseAPIExceptionDto of(HttpStatus code, String detail) {
+  public static BaseAPIExceptionDto of(HttpStatus status, String detail) {
     return BaseAPIExceptionDto.builder()
-        .code(code)
+        .status(status)
         .detail(detail)
         .build();
   }

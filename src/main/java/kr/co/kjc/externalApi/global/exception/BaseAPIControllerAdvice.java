@@ -26,7 +26,7 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 import org.springframework.web.util.ContentCachingRequestWrapper;
 
 @Slf4j
-@RestControllerAdvice(basePackages = "kr.co.kjc.settlement")
+@RestControllerAdvice(basePackages = "kr.co.kjc.externalApi")
 @RequiredArgsConstructor
 public class BaseAPIControllerAdvice extends ResponseEntityExceptionHandler {
 

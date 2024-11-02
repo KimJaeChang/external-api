@@ -27,7 +27,7 @@ public class BaseAPIException extends ResponseStatusException {
   }
 
   public BaseAPIException(BaseAPIExceptionDto dto) {
-    super(dto.getCode(), dto.getDetail());
+    super(dto.getStatus(), dto.getDetail());
     this.dto = dto;
   }
 

@@ -1,11 +1,7 @@
-package kr.co.kjc.externalApi.global.config.client;
+package kr.co.kjc.externalApi.global.config.client.restclient;
 
 import lombok.RequiredArgsConstructor;
-import org.apache.http.impl.client.HttpClientBuilder;
-import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.web.client.RestClient;
 import org.springframework.web.client.support.RestClientAdapter;
 import org.springframework.web.service.invoker.HttpServiceProxyFactory;
@@ -31,5 +27,4 @@ public class RestClientConfig {
 
     return factory.createClient(RestClient.class);
   }
-
 }
