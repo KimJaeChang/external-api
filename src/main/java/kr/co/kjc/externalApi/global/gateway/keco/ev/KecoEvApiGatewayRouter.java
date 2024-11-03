@@ -1,9 +1,9 @@
 package kr.co.kjc.externalApi.global.gateway.keco.ev;
 
 import jakarta.annotation.PostConstruct;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
-import kr.co.kjc.externalApi.global.config.client.custom.ApiClientRouter;
 import kr.co.kjc.externalApi.global.enums.EnumChildExternalApiType;
 import kr.co.kjc.externalApi.global.enums.EnumClientType;
 import kr.co.kjc.externalApi.global.enums.EnumResponseCode;
@@ -17,18 +17,33 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class KecoEvApiGatewayRouter {
 
+  @Value("${service.external.open-api.keco.ev.chargers.api-client}")
+  private String defaultApiClient;
+
   private static Map<EnumChildExternalApiType, DefaultKecoApiGateway<?>> map = new HashMap<>();
 
-  @Value("${service.external.open-api.keco.ev.chargers.api-client}")
-  private String defaultEvApiClient;
-
-  private final ApiClientRouter apiClientRouter;
+  private final KecoEvRestClientApiGateway<?> kecoEvRestClientApiGateway;
+  private final KecoEvWebClientApiGateway<?> kecoEvWebClientApiGateway;
 
   @PostConstruct
   void init() {
-    EnumClientType evClientType = EnumClientType.fromCode(defaultEvApiClient);
-    map.put(EnumChildExternalApiType.EV_CHARGERS_STATUS, apiClientRouter.get(evClientType));
-    map.put(EnumChildExternalApiType.EV_CHARGERS_INFO, apiClientRouter.get(evClientType));
+    EnumClientType clientType = EnumClientType.fromCode(defaultApiClient);
+
+    Arrays.stream(EnumChildExternalApiType.values())
+        .forEach(childExternalApiType -> {
+          switch (childExternalApiType) {
+            default -> {
+              switch (clientType) {
+                case REST_CLIENT -> map.put(childExternalApiType, kecoEvRestClientApiGateway);
+                case WEB_CLIENT -> map.put(childExternalApiType, kecoEvWebClientApiGateway);
+              }
+            }
+          }
+        });
+  }
+
+  public Map<EnumChildExternalApiType, DefaultKecoApiGateway<?>> findAll() {
+    return map;
   }
 
   public DefaultKecoApiGateway<?> get(EnumChildExternalApiType enumChildExternalApiType) {

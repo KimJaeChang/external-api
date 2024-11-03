@@ -1,13 +1,9 @@
-package kr.co.kjc.externalApi.global.gateway.keco;
+package kr.co.kjc.externalApi.global.gateway;
 
 import java.util.Optional;
-import kr.co.kjc.externalApi.global.dtos.api.OpenApiDto;
 import kr.co.kjc.externalApi.global.enums.EnumClientRequestType;
-import org.springframework.stereotype.Component;
 
-@Component
-public abstract class KecoWebClientApiGateway<T extends OpenApiDto.KecoApiInterface> extends
-    DefaultKecoApiGateway<T> {
+public abstract class DefaultApiGateway<T> implements ApiGateway<T> {
 
   @Override
   public abstract Optional<String> getHeaderKey(String headerKey);
@@ -20,5 +16,4 @@ public abstract class KecoWebClientApiGateway<T extends OpenApiDto.KecoApiInterf
 
   @Override
   public abstract <T> T postApi(Class<T> reqBody, Class<T> resBody);
-
 }

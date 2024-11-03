@@ -1,32 +1,37 @@
 package kr.co.kjc.externalApi.global.config.client.restclient;
 
-import kr.co.kjc.externalApi.global.config.client.DefaultClientGenerator;
-import kr.co.kjc.externalApi.global.enums.EnumClientType;
-import org.springframework.stereotype.Component;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.web.client.RestClient;
-import org.springframework.web.client.support.RestClientAdapter;
-import org.springframework.web.service.invoker.HttpServiceProxyFactory;
 
-@Component
-public abstract class RestClientGenerator extends DefaultClientGenerator {
+@Configuration
+public class RestClientGenerator {
 
   private static final int CONNECTION_TIMEOUT = 60000;
   private static final int READ_TIMEOUT = 60000;
 
-  public RestClientGenerator() {
-    super(EnumClientType.REST_CLIENT);
+  @Bean
+  public RestClient restClient() {
+    return RestClient.create();
   }
 
-  public static RestClient getBaseUri(final String uri) {
-    return RestClient.create(uri);
-  }
-
-  public static RestClient create(final String uri) {
-
-    RestClient restClient = RestClient.builder().baseUrl(uri).build();
-    RestClientAdapter adapter = RestClientAdapter.create(restClient);
-    HttpServiceProxyFactory factory = HttpServiceProxyFactory.builderFor(adapter).build();
-
-    return factory.createClient(RestClient.class);
-  }
+//  @Bean
+//  public RestClient create() {
+//
+//    RestClient restClient = RestClient.builder().build();
+//    RestClientAdapter adapter = restClientAdapter(restClient);
+//    HttpServiceProxyFactory factory = httpServiceProxyFactory(adapter);
+//
+//    return factory.createClient(RestClient.class);
+//  }
+//
+//  @Bean
+//  public RestClientAdapter restClientAdapter(RestClient restClient) {
+//    return RestClientAdapter.create(restClient);
+//  }
+//
+//  @Bean
+//  public HttpServiceProxyFactory httpServiceProxyFactory(RestClientAdapter adapter) {
+//    return HttpServiceProxyFactory.builderFor(adapter).build();
+//  }
 }

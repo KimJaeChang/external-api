@@ -3,10 +3,9 @@ package kr.co.kjc.externalApi.global.gateway.keco.ev;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.net.URI;
+import java.util.Optional;
 import kr.co.kjc.externalApi.global.dtos.api.OpenApiDto;
 import kr.co.kjc.externalApi.global.enums.EnumClientRequestType;
-import kr.co.kjc.externalApi.global.enums.EnumClientType;
-import kr.co.kjc.externalApi.global.gateway.keco.KecoRestClientApiGateway;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -16,7 +15,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 @Component
 @RequiredArgsConstructor
 public class KecoEvRestClientApiGateway<T extends OpenApiDto.KecoEvChargersInfo> extends
-    KecoRestClientApiGateway<T> {
+    DefaultKecoEvApiGateway<T> {
 
   @Value("${service.external.open-api.keco.ev.chargers.host}")
   private String host;
@@ -26,32 +25,27 @@ public class KecoEvRestClientApiGateway<T extends OpenApiDto.KecoEvChargersInfo>
 
 
   @Override
-  public String getHeaderKey(EnumClientType enumClientType, String headerKey) {
-    return "";
+  public Optional<String> getHeaderKey(String headerKey) {
+    return Optional.empty();
   }
 
   @Override
-  public <T> T getApi(EnumClientType enumClientType, Class<T> resBody) {
+  public <T> T getApi(Class<T> resBody) {
     return null;
   }
 
   @Override
-  public <T> T getApi(EnumClientType enumClientType, EnumClientRequestType enumClientRequestType,
+  public <T> T getApi(EnumClientRequestType enumClientRequestType,
       Class<T> req, Class<T> resBody) {
-    return null;
+    return this.switchGetApi(enumClientRequestType, req, resBody);
   }
 
   @Override
-  public <T> T postApi(EnumClientType enumClientType, Class<T> reqBody, Class<T> resBody) {
+  public <T> T postApi(Class<T> reqBody, Class<T> resBody) {
     return null;
   }
 
-  public <T> T switchGetApi(EnumClientType enumClientType, EnumClientRequestType requestType,
-      Class<T> req, Class<T> resBody) {
-    return this.switchRestClientGetApi(requestType, req, resBody);
-  }
-
-  private <T> T switchRestClientGetApi(EnumClientRequestType enumClientRequestType, Class<T> req,
+  private <T> T switchGetApi(EnumClientRequestType enumClientRequestType, Class<T> req,
       Class<T> resBody) {
 
     UriComponentsBuilder ucb = UriComponentsBuilder.fromUriString(uri);

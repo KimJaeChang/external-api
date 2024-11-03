@@ -3,7 +3,7 @@ package kr.co.kjc.externalApi.service.impl.keco;
 import java.util.Optional;
 import kr.co.kjc.externalApi.global.enums.EnumChildExternalApiType;
 import kr.co.kjc.externalApi.global.enums.EnumParentExternalApiType;
-import kr.co.kjc.externalApi.service.custom.DefaultExternalApiService;
+import kr.co.kjc.externalApi.service.impl.DefaultExternalApiService;
 import org.springframework.data.domain.Page;
 
 public abstract class DefaultKecoApiService<T> extends DefaultExternalApiService<T> {
@@ -12,10 +12,10 @@ public abstract class DefaultKecoApiService<T> extends DefaultExternalApiService
     super(EnumParentExternalApiType.KECO);
   }
 
-  public abstract Optional<Page<T>> findByExternalType(
+  public abstract <T> Page<T> findByExternalType(
       EnumChildExternalApiType childExternalApiType, Class<T> clazz);
 
-  public abstract Optional<T> findOndByExternalType(EnumChildExternalApiType childExternalApiType,
+  public abstract <T> Optional<T> findOndByExternalType(EnumChildExternalApiType childExternalApiType,
       Class<T> clazz);
 
 }

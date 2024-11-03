@@ -22,10 +22,11 @@ public enum EnumResponseCode {
   INVALID_JWT_TOKEN_HEADER(HttpStatus.BAD_REQUEST,
       "올바르지 않은 JWT 토큰입니다. Authorization로 헤더를 설정해 주세요."),
   INVALID_JWT_TOKEN_BODY(HttpStatus.BAD_REQUEST, "올바르지 않은 JWT 토큰입니다. Bearer 토큰으로 인증해 주세요."),
-  INVALID_EXTERNAL_PARENT_API(HttpStatus.BAD_REQUEST, "올바르지 않은 External Parent Api Type 입니다."),
-  INVALID_EXTERNAL_CHILD_API(HttpStatus.BAD_REQUEST, "올바르지 않은 External Child Api Type 입니다."),
+  INVALID_EXTERNAL_PARENT_API(HttpStatus.BAD_REQUEST, "올바르지 않은 ExternalParent Api Type 입니다."),
+  INVALID_EXTERNAL_CHILD_API(HttpStatus.BAD_REQUEST, "올바르지 않은 ExternalChild Api Type 입니다."),
   INVALID_CLIENT_GENERATOR(HttpStatus.BAD_REQUEST, "올바르지 않은 ClientGenerator 입니다."),
   INVALID_CLIENT_TYPE(HttpStatus.BAD_REQUEST, "올바르지 않은 EnumClientType 입니다."),
+  INVALID_PARENT_EXTERNAL_API_TYPE(HttpStatus.BAD_REQUEST, "올바르지 않은 EnumParentExternalApiType 입니다."),
   INVALID_CHILD_EXTERNAL_API_TYPE(HttpStatus.BAD_REQUEST, "올바르지 않은 EnumChildExternalApiType 입니다."),
 
   /**
