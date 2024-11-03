@@ -1,5 +1,6 @@
 package kr.co.kjc.externalApi.global.config.client.webclient;
 
+import java.net.URI;
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
@@ -19,6 +20,9 @@ public class CustomWebclientFilter {
 
   public static ExchangeFilterFunction logRequestFilter() {
     return ExchangeFilterFunction.ofRequestProcessor(clientRequest -> {
+      logRequestLogId(clientRequest);
+      logRequestHttpMethod(clientRequest);
+      logRequestUrl(clientRequest);
       logRequestHeader(clientRequest);
       return logRequestBody(clientRequest);
     });
@@ -36,11 +40,26 @@ public class CustomWebclientFilter {
     return ExchangeFilterFunction.ofResponseProcessor(CustomWebclientFilter::onErrorResponseHandler);
   }
 
+  private static void logRequestLogId(ClientRequest clientRequest) {
+    log.info("Webclient_Request_LogId : {}", clientRequest.logPrefix());
+  }
+
+  private static void logRequestHttpMethod(ClientRequest clientRequest) {
+    log.info("Webclient_Request_HttpMethod : [{}]", clientRequest.method());
+  }
+
+  private static void logRequestUrl(ClientRequest clientRequest) {
+    URI url = clientRequest.url();
+
+    log.info("Webclient_Request_Url : [{}]", url);
+  }
+
   private static void logRequestHeader(ClientRequest clientRequest) {
     Map<String, Object> headers = new HashMap<>();
     clientRequest.headers().forEach((headerName, headerValue) -> {
       headers.put(headerName, clientRequest.headers().get(headerName));
     });
+
     log.info("Webclient_Request_Header : [{}]", headers);
   }
 

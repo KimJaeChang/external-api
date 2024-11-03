@@ -8,7 +8,6 @@ import kr.co.kjc.externalApi.global.enums.EnumChildExternalApiType;
 import kr.co.kjc.externalApi.global.enums.EnumClientType;
 import kr.co.kjc.externalApi.global.enums.EnumResponseCode;
 import kr.co.kjc.externalApi.global.exception.BaseAPIException;
-import kr.co.kjc.externalApi.global.gateway.keco.DefaultKecoApiGateway;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -20,10 +19,10 @@ public class KecoEvApiGatewayRouter {
   @Value("${service.external.open-api.keco.ev.chargers.api-client}")
   private String defaultApiClient;
 
-  private static Map<EnumChildExternalApiType, DefaultKecoApiGateway<?>> map = new HashMap<>();
+  private static Map<EnumChildExternalApiType, DefaultKecoEvApiGateway<?, ?>> map = new HashMap<>();
 
-  private final KecoEvRestClientApiGateway<?> kecoEvRestClientApiGateway;
-  private final KecoEvWebClientApiGateway<?> kecoEvWebClientApiGateway;
+  private final KecoEvRestClientApiGateway<?, ?> kecoEvRestClientApiGateway;
+  private final KecoEvWebClientApiGateway<?, ?> kecoEvWebClientApiGateway;
 
   @PostConstruct
   void init() {
@@ -42,11 +41,11 @@ public class KecoEvApiGatewayRouter {
         });
   }
 
-  public Map<EnumChildExternalApiType, DefaultKecoApiGateway<?>> findAll() {
+  public Map<EnumChildExternalApiType, DefaultKecoEvApiGateway<?, ?>> findAll() {
     return map;
   }
 
-  public DefaultKecoApiGateway<?> get(EnumChildExternalApiType enumChildExternalApiType) {
+  public DefaultKecoEvApiGateway<?, ?> get(EnumChildExternalApiType enumChildExternalApiType) {
     return map.computeIfAbsent(enumChildExternalApiType, (childExternalApiType) -> {
       throw new BaseAPIException(EnumResponseCode.INVALID_CHILD_EXTERNAL_API_TYPE);
     });

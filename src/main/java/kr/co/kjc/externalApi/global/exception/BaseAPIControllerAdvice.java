@@ -37,7 +37,7 @@ public class BaseAPIControllerAdvice extends ResponseEntityExceptionHandler {
    */
   @ExceptionHandler(BaseAPIException.class)
   public ProblemDetail handleBaseAPIException(BaseAPIException e) {
-    log.error(TextConstants.EXCEPTION_PREFIX, e);
+    log.error("handleBaseAPIException "+TextConstants.EXCEPTION_PREFIX, e);
 
     if (e.isBaseErrorCodeType()) {
       // 고정된 메시지일 경우
@@ -57,7 +57,7 @@ public class BaseAPIControllerAdvice extends ResponseEntityExceptionHandler {
       MethodArgumentNotValidException e,
       HttpHeaders headers, HttpStatusCode status, WebRequest request) {
     printRequestLogging();
-    log.error(TextConstants.EXCEPTION_PREFIX, e);
+    log.error("handleMethodArgumentNotValid "+TextConstants.EXCEPTION_PREFIX, e);
     List<Map<String, String>> errors = new ArrayList<>();
 
     // TODO 고민해보기 : A/B 테스트 필요
@@ -82,7 +82,7 @@ public class BaseAPIControllerAdvice extends ResponseEntityExceptionHandler {
   @ExceptionHandler(ResponseStatusException.class)
   protected ProblemDetail handleResponseStatusException(final ResponseStatusException e) {
     printRequestLogging();
-    log.error(TextConstants.EXCEPTION_PREFIX, e);
+    log.error("handleResponseStatusException "+TextConstants.EXCEPTION_PREFIX, e);
     return helper.build(HttpStatus.resolve(e.getStatusCode().value()), e.getMessage());
   }
 
@@ -91,7 +91,7 @@ public class BaseAPIControllerAdvice extends ResponseEntityExceptionHandler {
    */
   @ExceptionHandler(Exception.class)
   protected ProblemDetail handleAllException(final Exception e, WebRequest request) {
-    log.error(TextConstants.EXCEPTION_PREFIX, e);
+    log.error("handleAllException "+TextConstants.EXCEPTION_PREFIX, e);
     // return this.createProblemDetail(e, HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage(), null, null, request);
     return helper.build(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage(), request);
   }

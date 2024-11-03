@@ -3,19 +3,18 @@ package kr.co.kjc.externalApi.global.gateway.keco.ev;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.net.URI;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
-import kr.co.kjc.externalApi.global.dtos.api.OpenApiDto;
 import kr.co.kjc.externalApi.global.enums.EnumClientRequestType;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
-import org.springframework.util.MultiValueMap;
 import org.springframework.web.util.UriComponentsBuilder;
 
 @Component
 @RequiredArgsConstructor
-public class KecoEvRestClientApiGateway<T extends OpenApiDto.KecoEvChargersInfo> extends
-    DefaultKecoEvApiGateway<T> {
+public class KecoEvRestClientApiGateway<T, R> extends DefaultKecoEvApiGateway<T, R> {
 
   @Value("${service.external.open-api.keco.ev.chargers.host}")
   private String host;
@@ -35,8 +34,7 @@ public class KecoEvRestClientApiGateway<T extends OpenApiDto.KecoEvChargersInfo>
   }
 
   @Override
-  public <T> T getApi(EnumClientRequestType enumClientRequestType,
-      Class<T> req, Class<T> resBody) {
+  public <T, R> R getApi(EnumClientRequestType enumClientRequestType, T req, Class<R> resBody) {
     return this.switchGetApi(enumClientRequestType, req, resBody);
   }
 
@@ -45,19 +43,19 @@ public class KecoEvRestClientApiGateway<T extends OpenApiDto.KecoEvChargersInfo>
     return null;
   }
 
-  private <T> T switchGetApi(EnumClientRequestType enumClientRequestType, Class<T> req,
-      Class<T> resBody) {
+  private <T, R> R switchGetApi(EnumClientRequestType enumClientRequestType, T req,
+      Class<R> resBody) {
 
     UriComponentsBuilder ucb = UriComponentsBuilder.fromUriString(uri);
 
     switch (enumClientRequestType) {
       case GET_PARAMS -> {
 
-        MultiValueMap<String, String> queryParams = om.convertValue(req,
-            new TypeReference<MultiValueMap<String, String>>() {
+        Map<String, Object> queryParams = om.convertValue(req,
+            new TypeReference<HashMap<String, Object>>() {
             });
 
-        URI ub = ucb.queryParams(queryParams).build().toUri();
+        URI ub = ucb.uriVariables(queryParams).build().toUri();
         return null;
       }
       default -> {

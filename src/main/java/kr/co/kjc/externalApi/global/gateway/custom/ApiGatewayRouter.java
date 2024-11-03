@@ -14,7 +14,7 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class ApiGatewayRouter {
 
-  private static Map<EnumChildExternalApiType, List<DefaultApiGateway<?>>> map = new HashMap<>();
+  private static Map<EnumChildExternalApiType, List<DefaultApiGateway<?, ?>>> map = new HashMap<>();
 
   private final KecoApiGatewayRouter kecoApiGatewayRouter;
 

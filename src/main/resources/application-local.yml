@@ -16,6 +16,7 @@ service:
         ev:
           chargers:
             api-client: web-client
+            service-key: ${OPEN_API_SECRET_KEY_KECO_EV_CHARGERS}
             host: http://apis.data.go.kr
             uri: /B552584/EvCharger
   mongodb:

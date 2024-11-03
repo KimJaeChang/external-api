@@ -16,23 +16,12 @@ import lombok.ToString;
 @ToString
 public class OpenApiDto {
 
-  public interface KecoApiInterface {
-
-  }
-
-  @Schema(description = "환경공단 전기자동차 API Dto",
-      name = "OpenApiDto.KecoApiDto"
-  )
-  public static class DefaultKecoApiEvDto implements KecoApiInterface {
-
-  }
-
   @Schema(description = "환경공단 전기자동차 충전소 정보 Dto",
       name = "OpenApiDto.KecoEvChargersInfo"
   )
   @NoArgsConstructor(access = AccessLevel.PRIVATE)
   @ToString
-  public static class KecoEvChargersInfo extends DefaultKecoApiEvDto {
+  public static class KecoEvChargersInfo {
 
     @Schema(description = "요청 Dto",
         name = "OpenApiDto.KecoEvChargersInfo.RequestDto"
@@ -57,12 +46,23 @@ public class OpenApiDto {
 
       @Schema(description = "시도 코드 (행정구역코드 앞 2자리)", example = "11")
       private String zcode;
+
+      public static RequestDto of(String ServiceKey, Integer pageNo, Integer numOfRows, String zcode) {
+        return RequestDto.builder()
+            .ServiceKey(ServiceKey)
+            .pageNo(pageNo)
+            .numOfRows(numOfRows)
+            .zcode(zcode)
+            .build();
+      }
+
     }
 
     @Schema(description = "응답 Dto",
         name = "OpenApiDto.KecoEvChargersInfo.ResponseDto"
     )
     @Data
+    @Builder
     @NoArgsConstructor(access = AccessLevel.PRIVATE)
     @AllArgsConstructor(access = AccessLevel.PRIVATE)
     public static class ResponseDto {

@@ -5,7 +5,7 @@ import kr.co.kjc.externalApi.global.enums.EnumClientRequestType;
 import kr.co.kjc.externalApi.global.enums.EnumResponseCode;
 import kr.co.kjc.externalApi.global.exception.BaseAPIException;
 
-public interface ApiGateway<T> {
+public interface ApiGateway<T, R> {
 
   default Optional<String> getHeaderKey(String headerKey) {
     throw new BaseAPIException(EnumResponseCode.SERVICE_UNAVAILABLE_BY_IMPLEMENT);
@@ -15,8 +15,7 @@ public interface ApiGateway<T> {
     throw new BaseAPIException(EnumResponseCode.SERVICE_UNAVAILABLE_BY_IMPLEMENT);
   }
 
-  default <T> T getApi(EnumClientRequestType enumClientRequestType,
-      Class<T> req, Class<T> resBody) {
+  default <T, R> R getApi(EnumClientRequestType enumClientRequestType, T req, Class<R> resBody) {
     throw new BaseAPIException(EnumResponseCode.SERVICE_UNAVAILABLE_BY_IMPLEMENT);
   }
 

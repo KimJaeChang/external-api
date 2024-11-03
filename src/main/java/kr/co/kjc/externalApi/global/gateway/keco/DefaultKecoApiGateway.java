@@ -5,7 +5,7 @@ import kr.co.kjc.externalApi.global.enums.EnumClientRequestType;
 import kr.co.kjc.externalApi.global.enums.EnumParentExternalApiType;
 import kr.co.kjc.externalApi.global.gateway.DefaultApiGateway;
 
-public abstract class DefaultKecoApiGateway<T> extends DefaultApiGateway<T> {
+public abstract class DefaultKecoApiGateway<T, R> extends DefaultApiGateway<T, R> {
 
   private final EnumParentExternalApiType parentExternalApiType;
 
@@ -20,7 +20,7 @@ public abstract class DefaultKecoApiGateway<T> extends DefaultApiGateway<T> {
   public abstract <T> T getApi(Class<T> resBody);
 
   @Override
-  public abstract <T> T getApi(EnumClientRequestType enumClientRequestType, Class<T> req, Class<T> resBody);
+  public abstract <T, R> R getApi(EnumClientRequestType enumClientRequestType, T req, Class<R> resBody);
 
   @Override
   public abstract <T> T postApi(Class<T> reqBody, Class<T> resBody);

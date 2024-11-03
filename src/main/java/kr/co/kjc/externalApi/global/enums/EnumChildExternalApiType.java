@@ -1,5 +1,7 @@
 package kr.co.kjc.externalApi.global.enums;
 
+import java.util.Arrays;
+import kr.co.kjc.externalApi.global.exception.BaseAPIException;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
@@ -14,5 +16,12 @@ public enum EnumChildExternalApiType {
   private final String code;
   private final String description;
   private final EnumParentExternalApiType parentExternalApiType;
+
+  public static EnumChildExternalApiType fromCode(String code) {
+    return Arrays.stream(EnumChildExternalApiType.values())
+        .filter(f -> f.getCode().equals(code))
+        .findFirst()
+        .orElseThrow(() -> new BaseAPIException(EnumResponseCode.INVALID_CHILD_EXTERNAL_API_TYPE));
+  }
 
 }

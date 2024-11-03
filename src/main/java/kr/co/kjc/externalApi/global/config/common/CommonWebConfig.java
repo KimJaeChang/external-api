@@ -1,9 +1,11 @@
 package kr.co.kjc.externalApi.global.config.common;
 
 import java.util.List;
+import kr.co.kjc.externalApi.global.converter.EnumExternalChildTypeConverter;
 import kr.co.kjc.externalApi.global.converter.EnumExternalParentTypeConverter;
 import kr.co.kjc.externalApi.global.interceptor.GlobalLoggingInterceptor;
 import kr.co.kjc.externalApi.global.resolver.BaseSearchDTOArgumentResolver;
+import kr.co.kjc.externalApi.global.resolver.KecoEvRequestDtoArgumentResolver;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.format.FormatterRegistry;
@@ -40,11 +42,13 @@ public class CommonWebConfig implements WebMvcConfigurer {
   @Override
   public void addArgumentResolvers(List<HandlerMethodArgumentResolver> resolvers) {
     resolvers.add(new BaseSearchDTOArgumentResolver());
+    resolvers.add(new KecoEvRequestDtoArgumentResolver());
   }
 
   @Override
   public void addFormatters(FormatterRegistry registry) {
     registry.addConverter(new EnumExternalParentTypeConverter());
+    registry.addConverter(new EnumExternalChildTypeConverter());
   }
 
   // NOTE : CORS Filter
