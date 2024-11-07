@@ -11,6 +11,12 @@ config:
 # Service Properties
 service:
   external:
+    github:
+      host: https://api.github.com
+      secret-api:
+        uri: /repos/${GITHUB_OWNER}/${GITHUB_REPO}/actions/secrets
+        headers:
+          authorization: ${GITHUB_AUTHORIZATION}
     open-api:
       keco:
         ev:
@@ -18,7 +24,11 @@ service:
             api-client: web-client
             service-key: ${OPEN_API_SECRET_KEY_KECO_EV_CHARGERS}
             host: http://apis.data.go.kr
-            uri: /B552584/EvCharger
+            info:
+              uri: /B552584/EvCharger/getChargerInfo
+            status:
+              uri: /B552584/EvCharger/getChargerStatus
+
   mongodb:
     host: localhost
     port: 27017

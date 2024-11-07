@@ -113,8 +113,7 @@ public class CustomWebclientFilter {
   private static Mono<ClientResponse> onErrorResponseHandler(ClientResponse clientResponse) {
 
     if (clientResponse.statusCode().isError()) {
-      log.info("Webclient_Error_StatusCode : [{}] [{}]", clientResponse.statusCode().value(),
-          HttpStatus.valueOf(clientResponse.statusCode().value()));
+      log.info("Webclient_Error_StatusCode : [{}]", HttpStatus.valueOf(clientResponse.statusCode().value()));
 
       return clientResponse.createException()
           .flatMap(ex -> {
@@ -123,7 +122,7 @@ public class CustomWebclientFilter {
             return Mono.error(
                 new BaseAPIException(
                     BaseAPIExceptionDto.of(HttpStatus.valueOf(ex.getStatusCode().value()),
-                        ex.getMessage())));
+                        ex.getResponseBodyAsString())));
           });
     }
 

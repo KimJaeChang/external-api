@@ -11,6 +11,7 @@ public enum EnumChildExternalApiType {
 
   EV_CHARGERS_INFO("ev-chargers-info", "전기차 충전기 데이터 정보 API", EnumParentExternalApiType.KECO),
   EV_CHARGERS_STATUS("ev-chargers-status", "전기차 충전기 상태 정보 API", EnumParentExternalApiType.KECO),
+  GITHUB_SECRETS("github-secrets", "GitHub Secrets API", EnumParentExternalApiType.GITHUB),
   ;
 
   private final String code;

@@ -6,7 +6,7 @@ import kr.co.kjc.externalApi.global.enums.EnumClientRequestType;
 public abstract class DefaultApiGateway<T, R> implements ApiGateway<T, R> {
 
   @Override
-  public abstract Optional<String> getHeaderKey(String headerKey);
+  public abstract Optional<R> getHeader(R resHeaderKey);
 
   @Override
   public abstract <T> T getApi(Class<T> resBody);
@@ -15,5 +15,5 @@ public abstract class DefaultApiGateway<T, R> implements ApiGateway<T, R> {
   public abstract <T, R> R getApi(EnumClientRequestType enumClientRequestType, T req, Class<R> resBody);
 
   @Override
-  public abstract <T> T postApi(Class<T> reqBody, Class<T> resBody);
+  public abstract <T, R> R postApi(T reqBody, Class<R> resBody);
 }

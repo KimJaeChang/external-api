@@ -10,7 +10,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @Configuration
 @EntityScan(basePackages = {"kr.co.kjc.externalApi.domain.jpa"})
-@EnableJpaRepositories(basePackages = {"kr.co.kjc.externalApi"})
+@EnableJpaRepositories(basePackages = {"kr.co.kjc.externalApi.repository.jpa"})
 public class JpaConfig {
 
   @PersistenceContext

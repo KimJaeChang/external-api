@@ -14,7 +14,7 @@ public abstract class DefaultKecoApiGateway<T, R> extends DefaultApiGateway<T, R
   }
 
   @Override
-  public abstract Optional<String> getHeaderKey(String headerKey);
+  public abstract Optional<R> getHeader(R headerKey);
 
   @Override
   public abstract <T> T getApi(Class<T> resBody);
@@ -23,6 +23,6 @@ public abstract class DefaultKecoApiGateway<T, R> extends DefaultApiGateway<T, R
   public abstract <T, R> R getApi(EnumClientRequestType enumClientRequestType, T req, Class<R> resBody);
 
   @Override
-  public abstract <T> T postApi(Class<T> reqBody, Class<T> resBody);
+  public abstract <T, R> R postApi(T reqBody, Class<R> resBody);
 
 }

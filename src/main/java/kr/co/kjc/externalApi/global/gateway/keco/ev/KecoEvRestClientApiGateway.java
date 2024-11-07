@@ -18,13 +18,13 @@ public class KecoEvRestClientApiGateway<T, R> extends DefaultKecoEvApiGateway<T,
 
   @Value("${service.external.open-api.keco.ev.chargers.host}")
   private String host;
-  @Value("${service.external.open-api.keco.ev.chargers.uri}")
+  @Value("${service.external.open-api.keco.ev.chargers.info.uri}")
   private String uri;
   private final ObjectMapper om;
 
 
   @Override
-  public Optional<String> getHeaderKey(String headerKey) {
+  public Optional<R> getHeader(R headerKey) {
     return Optional.empty();
   }
 
@@ -39,7 +39,7 @@ public class KecoEvRestClientApiGateway<T, R> extends DefaultKecoEvApiGateway<T,
   }
 
   @Override
-  public <T> T postApi(Class<T> reqBody, Class<T> resBody) {
+  public <T, R> R postApi(T reqBody, Class<R> resBody) {
     return null;
   }
 

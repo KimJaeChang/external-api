@@ -1,16 +1,18 @@
 package kr.co.kjc.externalApi.global.config.client.restclient;
 
+import kr.co.kjc.externalApi.global.config.client.ClientGenerator;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.client.RestClient;
 
 @Configuration
-public class RestClientGenerator {
+public class RestClientGenerator implements ClientGenerator {
 
   private static final int CONNECTION_TIMEOUT = 60000;
   private static final int READ_TIMEOUT = 60000;
 
   @Bean
+  @Override
   public RestClient restClient() {
     return RestClient.create();
   }

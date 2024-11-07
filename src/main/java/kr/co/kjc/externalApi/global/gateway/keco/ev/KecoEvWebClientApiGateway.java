@@ -3,6 +3,7 @@ package kr.co.kjc.externalApi.global.gateway.keco.ev;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.net.URI;
+import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
@@ -11,31 +12,40 @@ import kr.co.kjc.externalApi.global.config.client.webclient.WebClientGenerator;
 import kr.co.kjc.externalApi.global.enums.EnumClientRequestType;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.codec.xml.Jaxb2XmlDecoder;
 import org.springframework.stereotype.Component;
-import org.springframework.web.reactive.function.client.WebClient.RequestHeadersUriSpec;
+import org.springframework.util.MimeType;
+import org.springframework.util.MimeTypeUtils;
+import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.util.UriComponentsBuilder;
 
 @Component
 @RequiredArgsConstructor
-public class KecoEvWebClientApiGateway<T, R> extends
-    DefaultKecoEvApiGateway<T, R> {
+public class KecoEvWebClientApiGateway<T, R> extends DefaultKecoEvApiGateway<T, R> {
 
   @Value("${service.external.open-api.keco.ev.chargers.host}")
   private String host;
-  @Value("${service.external.open-api.keco.ev.chargers.uri}")
+  @Value("${service.external.open-api.keco.ev.chargers.info.uri}")
   private String uri;
 
   private final ObjectMapper om;
   private final WebClientGenerator webClientGenerator;
 
   @Override
-  public Optional<String> getHeaderKey(String headerKey) {
+  public Optional<R> getHeader(R headerKey) {
     return Optional.empty();
   }
 
   @Override
   public <T> T getApi(Class<T> resBody) {
-    return webClientGenerator.webClient()
+
+    WebClient mutateWebclient = webClientGenerator.webClient().mutate()
+        .codecs(clientCodecConfigurer -> {
+          clientCodecConfigurer.defaultCodecs().jackson2JsonDecoder(new Jaxb2XmlDecoder());
+        })
+        .build();
+
+    return mutateWebclient
         .get()
         .uri(uriBuilder -> uriBuilder.host(host).path(uri).build())
         .retrieve()
@@ -49,8 +59,15 @@ public class KecoEvWebClientApiGateway<T, R> extends
   }
 
   @Override
-  public <T> T postApi(Class<T> reqBody, Class<T> resBody) {
-    return webClientGenerator.webClient()
+  public <T, R> R postApi(T reqBody, Class<R> resBody) {
+
+    WebClient mutateWebclient = webClientGenerator.webClient().mutate()
+        .codecs(clientCodecConfigurer -> {
+          clientCodecConfigurer.defaultCodecs().jackson2JsonDecoder(new Jaxb2XmlDecoder());
+        })
+        .build();
+
+    return mutateWebclient
         .post()
         .uri(uriBuilder -> uriBuilder.host(host).path(uri).build())
         .body(CustomBodyInserter.of(reqBody))
@@ -63,8 +80,12 @@ public class KecoEvWebClientApiGateway<T, R> extends
       Class<R> resBody) {
 
     UriComponentsBuilder ucb = UriComponentsBuilder.fromHttpUrl(host+uri);
-    RequestHeadersUriSpec<?> webclientHEadersUriSpec = webClientGenerator.webClient()
-        .get();
+    WebClient mutateWebclient = webClientGenerator.webClient().mutate()
+        .codecs(clientCodecConfigurer -> {
+          clientCodecConfigurer.defaultCodecs().jackson2JsonDecoder(new Jaxb2XmlDecoder(new MimeType(
+              MimeTypeUtils.TEXT_XML, StandardCharsets.UTF_8)));
+        })
+        .build();
 
     switch (enumClientRequestType) {
       case GET_PARAMS -> {
@@ -73,8 +94,22 @@ public class KecoEvWebClientApiGateway<T, R> extends
             new TypeReference<HashMap<String, Object>>() {
             });
 
-        URI ub = ucb.uriVariables(queryParams).build().toUri();
-        return webclientHEadersUriSpec
+        URI ub = ucb
+            .queryParam("serviceKey", String.valueOf(queryParams.get("serviceKey")))
+            .queryParam("pageNo", String.valueOf(queryParams.get("pageNo")))
+            .queryParam("numOfRows", String.valueOf(queryParams.get("numOfRows")))
+            .queryParam("zcode", String.valueOf(queryParams.get("zcode")))
+            .build().toUri();
+
+//        MultiValueMap<String, String> queryParams = om.convertValue(req,
+//            new TypeReference<MultiValueMap<String, String>>() {
+//            });
+//
+//        URI ub = ucb.queryParams(queryParams)
+//            .build().toUri();
+
+        return mutateWebclient
+            .get()
             .uri(ub)
             .retrieve()
             .bodyToMono(resBody)
@@ -83,7 +118,8 @@ public class KecoEvWebClientApiGateway<T, R> extends
 
       default -> {
         URI ub = ucb.build().toUri();
-        return webclientHEadersUriSpec
+        return mutateWebclient
+            .get()
             .uri(ub)
             .retrieve()
             .bodyToMono(resBody)

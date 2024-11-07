@@ -8,6 +8,7 @@ import kr.co.kjc.externalApi.global.resolver.BaseSearchDTOArgumentResolver;
 import kr.co.kjc.externalApi.global.resolver.KecoEvRequestDtoArgumentResolver;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.env.Environment;
 import org.springframework.format.FormatterRegistry;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
@@ -20,9 +21,10 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @RequiredArgsConstructor
 public class CommonWebConfig implements WebMvcConfigurer {
 
-  private final static List<String> LOG_EXCLUDES = List.of("/css/**", "/*.ico", "/error",
+  private final static List<String> LOG_EXCLUDES = List.of("/css/**", "/*.ico", "/error", "/swagger-ui**",
       "/error-page/**");
 
+  private final Environment env;
 
   @Override
   public void addResourceHandlers(ResourceHandlerRegistry registry) { // 기본 resourceHandler 유지하면서 추가
@@ -42,7 +44,7 @@ public class CommonWebConfig implements WebMvcConfigurer {
   @Override
   public void addArgumentResolvers(List<HandlerMethodArgumentResolver> resolvers) {
     resolvers.add(new BaseSearchDTOArgumentResolver());
-    resolvers.add(new KecoEvRequestDtoArgumentResolver());
+    resolvers.add(new KecoEvRequestDtoArgumentResolver(env));
   }
 
   @Override
